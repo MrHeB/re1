@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	
+	<body>
+		<script src="vue.js"></script>
+		<div id="app">
+		        <h2>备忘录</h2>
+		        <!-- @submit.prevent：绑定表单提交，阻止表单提交跳转 -->
+		        <form action="#" @submit.prevent='addMemo'>
+		        <textarea placeholder="请输入今天的内容!" v-model = 'msg'></textarea>
+		            <button type="submit" value="完成">完成</button>
+		        </form>
+		        <ul>
+		            <li v-for='item in list' :key="item.id">
+		                <span>{{item.id}}</span>
+		                <span>{{item.msg}}</span>
+		                <span>{{item.time}}</span>
+		                <!-- #代表不跳转   通过id删除 -->
+		                <a href="#" @click.prevent='delMemo(item.id)'>删除</a>
+		            </li>
+		        </ul>
+		    </div>
+		<script>
+		        
+		            new Vue({
+		                el:"#app",
+		                data:{
+		                    msg:'',
+		                    index:1,
+		                    list:[]
+		                },
+		                methods:{
+		                    addMemo(){
+		                        var memo={
+		                            id:this.index,
+		                            msg:this.msg,
+		                            time:new Date().toLocaleString()
+		                        }
+		                        this.list.push(memo);
+		                        //清空输入框
+		                        this.msg='';
+		                        //id递增
+		                        this.index++;
+		                    },
+		                    delMemo(id){
+		                        // filter过滤
+		                        this.list = this.list.filter((item)=>{
+		                            // 假设删除id为1的记录，则过滤出id不等于1的
+		                            return item.id!=id
+		                        });
+		                    }
+		                }
+		            });
+		       
+		    </script>
+		  
+		
+	</body>
+</html>
